@@ -1,0 +1,3509 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BookStore | Discover Your Next Book</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary: #6b4226;
+            --primary-dark: #43291a;
+            --accent: #c8945e;
+            --bg: #f5f1eb;
+            --card: #ffffff;
+            --text: #29231f;
+            --muted: #766e68;
+            --border: #e5ddd4;
+            --hero: #e9dfd2;
+            --dark: #171311;
+            --dark-card: #241e1a;
+            --dark-border: #3a302a;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: .3s;
+        }
+
+        body.dark {
+            --bg: #171311;
+            --card: #241e1a;
+            --text: #f4eee8;
+            --muted: #b6aaa1;
+            --border: #3a302a;
+            --hero: #2b211c;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,.94);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        body.dark header {
+            background: rgba(23,19,17,.94);
+        }
+
+        nav {
+            max-width: 1200px;
+            height: 76px;
+            margin: auto;
+            padding: 0 22px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .logo {
+            font-family: Georgia, serif;
+            font-size: 27px;
+            font-weight: bold;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: var(--text);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            border-radius: 8px;
+            font-size: 17px;
+        }
+
+        .icon-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .login-btn,
+        .cart-btn {
+            border: 0;
+            background: var(--primary);
+            color: white;
+            padding: 11px 16px;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        .login-btn:hover,
+        .cart-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .cart-btn span {
+            background: var(--accent);
+            padding: 2px 6px;
+            border-radius: 20px;
+            margin-left: 4px;
+            font-size: 11px;
+        }
+
+        .mobile-menu {
+            display: none;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            background: var(--hero);
+            min-height: 570px;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            min-height: 570px;
+            margin: auto;
+            padding: 70px 22px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 80px;
+        }
+
+        .hero-content {
+            max-width: 620px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(107,66,38,.1);
+            color: var(--primary);
+            padding: 8px 13px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-family: Georgia, serif;
+            font-size: 58px;
+            line-height: 1.1;
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            color: var(--muted);
+            line-height: 1.8;
+            font-size: 17px;
+            max-width: 570px;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .primary-btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 14px 23px;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        .primary-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .secondary-btn {
+            display: inline-block;
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 14px 23px;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        .secondary-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .hero-book {
+            width: 290px;
+            height: 400px;
+            background: white;
+            padding: 9px;
+            box-shadow: 18px 25px 50px rgba(40,25,15,.25);
+            transform: rotate(4deg);
+            transition: .4s;
+        }
+
+        .hero-book:hover {
+            transform: rotate(0deg) translateY(-8px);
+        }
+
+        .hero-book img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* =========================
+           GENERAL
+        ========================= */
+
+        .section {
+            max-width: 1200px;
+            margin: auto;
+            padding: 85px 22px;
+        }
+
+        .section-heading {
+            margin-bottom: 35px;
+        }
+
+        .section-heading h2 {
+            font-family: Georgia, serif;
+            font-size: 36px;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .section-heading p {
+            color: var(--muted);
+        }
+
+        /* =========================
+           SEARCH
+        ========================= */
+
+        .search-box {
+            display: flex;
+            max-width: 760px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            flex: 1;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            color: var(--text);
+            padding: 16px;
+            font-size: 15px;
+        }
+
+        .search-box button {
+            border: 0;
+            background: var(--primary);
+            color: white;
+            padding: 0 25px;
+        }
+
+        /* =========================
+           FILTERS
+        ========================= */
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-bottom: 35px;
+        }
+
+        .filter {
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--muted);
+            padding: 9px 14px;
+            border-radius: 6px;
+        }
+
+        .filter:hover,
+        .filter.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* =========================
+           BOOK GRID
+        ========================= */
+
+        .books {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 23px;
+        }
+
+        .book-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            overflow: hidden;
+            transition: .3s;
+        }
+
+        .book-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 18px 40px rgba(45,30,20,.12);
+        }
+
+        .book-cover {
+            height: 330px;
+            position: relative;
+            overflow: hidden;
+            background: #e9e4de;
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity .35s, transform .5s;
+        }
+
+        .book-cover .second-cover {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+        }
+
+        .book-card:hover .first-cover {
+            opacity: 0;
+            transform: scale(1.04);
+        }
+
+        .book-card:hover .second-cover {
+            opacity: 1;
+            transform: scale(1.03);
+        }
+
+        /* BOOK WITHOUT IMAGE */
+
+        .no-image-cover {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #756a61;
+            background:
+                linear-gradient(135deg,#eee8e1,#dcd2c8);
+        }
+
+        .no-image-cover .book-symbol {
+            font-size: 58px;
+            margin-bottom: 12px;
+        }
+
+        .no-image-cover strong {
+            font-family: Georgia, serif;
+            font-size: 22px;
+        }
+
+        .book-info {
+            padding: 18px;
+        }
+
+        .book-info h3 {
+            font-family: Georgia, serif;
+            font-size: 19px;
+            margin-bottom: 7px;
+        }
+
+        .author {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .category {
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .book-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--border);
+            padding-top: 14px;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .book-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .small-btn {
+            border: 0;
+            padding: 9px 11px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .details-btn {
+            background: #eee8e1;
+            color: #5c4738;
+        }
+
+        .add-btn {
+            background: var(--primary);
+            color: white;
+        }
+
+        .small-btn:hover {
+            opacity: .85;
+        }
+
+        .no-books {
+            display: none;
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px;
+            color: var(--muted);
+        }
+
+        /* =========================
+           CATEGORIES
+        ========================= */
+
+        .category-section {
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 14px;
+        }
+
+        .category-box {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 25px 12px;
+            text-align: center;
+            border-radius: 8px;
+            transition: .3s;
+        }
+
+        .category-box:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+        }
+
+        .category-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .category-box h3 {
+            font-family: Georgia, serif;
+            margin-bottom: 7px;
+        }
+
+        .category-box p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* =========================
+           VIDEO
+        ========================= */
+
+        .video-section {
+            background: var(--bg);
+        }
+
+        .video-container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .video-box {
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,.15);
+        }
+
+        .video-box video {
+            width: 100%;
+            display: block;
+            max-height: 520px;
+        }
+
+        .video-note {
+            text-align: center;
+            color: var(--muted);
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        /* =========================
+           CONTACT
+        ========================= */
+
+        .contact {
+            background: #30251f;
+            color: white;
+        }
+
+        .contact-container {
+            max-width: 680px;
+            margin: auto;
+            padding: 85px 22px;
+        }
+
+        .contact h2 {
+            font-family: Georgia, serif;
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .contact-description {
+            text-align: center;
+            color: #c8bdb5;
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            border: 0;
+            outline: 0;
+            padding: 14px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            border: 0;
+            background: var(--accent);
+            color: white;
+            padding: 14px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .submit-btn:hover {
+            background: #a8784c;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            background: #211a16;
+            color: #aaa19b;
+            padding: 28px 20px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            color: white;
+            font-family: Georgia, serif;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        /* =========================
+           MODAL
+        ========================= */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            width: 100%;
+            max-width: 470px;
+            background: var(--card);
+            color: var(--text);
+            border-radius: 12px;
+            padding: 25px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal.large {
+            max-width: 800px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 34px;
+            height: 34px;
+            border: 0;
+            background: #eee;
+            color: #333;
+            border-radius: 50%;
+            font-size: 18px;
+        }
+
+        .modal h2 {
+            font-family: Georgia, serif;
+            margin-bottom: 20px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .auth-form input {
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .auth-form button {
+            width: 100%;
+            border: 0;
+            background: var(--primary);
+            color: white;
+            padding: 13px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .details-content {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 25px;
+            align-items: start;
+        }
+
+        .details-image {
+            width: 100%;
+            height: 330px;
+            object-fit: cover;
+            border-radius: 7px;
+        }
+
+        .details-content h3 {
+            font-family: Georgia, serif;
+            font-size: 29px;
+            margin-bottom: 8px;
+        }
+
+        .details-author {
+            color: var(--muted);
+            margin-bottom: 18px;
+        }
+
+        .details-category {
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        .details-description {
+            color: var(--muted);
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        /* =========================
+           CART
+        ========================= */
+
+        .cart-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.45);
+            display: none;
+            z-index: 4000;
+        }
+
+        .cart-overlay.show {
+            display: block;
+        }
+
+        .cart {
+            position: fixed;
+            top: 0;
+            left: -440px;
+            width: 410px;
+            max-width: 92%;
+            height: 100vh;
+            background: var(--card);
+            color: var(--text);
+            z-index: 4100;
+            padding: 23px;
+            transition: .35s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart.show {
+            left: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 16px;
+        }
+
+        .cart-header h2 {
+            font-family: Georgia, serif;
+        }
+
+        .close-cart {
+            border: 0;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 10px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cart-item img {
+            width: 55px;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .cart-info {
+            flex: 1;
+        }
+
+        .cart-info h4 {
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .cart-price {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .quantity {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 9px;
+        }
+
+        .quantity button {
+            width: 25px;
+            height: 25px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+            border-radius: 4px;
+        }
+
+        .quantity span {
+            min-width: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .remove-item {
+            border: 0;
+            background: #f3e8e8;
+            color: #a33b3b;
+            height: 30px;
+            padding: 0 8px;
+            border-radius: 4px;
+            align-self: center;
+        }
+
+        .cart-footer {
+            border-top: 1px solid var(--border);
+            padding-top: 18px;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 14px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            border: 0;
+            background: var(--primary);
+            color: white;
+            padding: 14px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           CHECKOUT
+        ========================= */
+
+        .checkout-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 13px;
+        }
+
+        .checkout-form .full {
+            grid-column: 1 / -1;
+        }
+
+        .checkout-form label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: var(--muted);
+        }
+
+        .checkout-form input,
+        .checkout-form select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .place-order {
+            grid-column: 1 / -1;
+            border: 0;
+            background: var(--primary);
+            color: white;
+            padding: 14px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        /* =========================
+           TOAST
+        ========================= */
+
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #24201d;
+            color: white;
+            padding: 13px 18px;
+            border-radius: 7px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: .3s;
+            z-index: 6000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1050px) {
+            .books {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+        }
+
+        @media (max-width: 800px) {
+            nav {
+                height: 68px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .nav-actions {
+                margin-left: auto;
+            }
+
+            .login-btn {
+                display: none;
+            }
+
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+                padding: 60px 22px;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-book {
+                width: 240px;
+                height: 330px;
+            }
+
+            .books {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .details-content {
+                grid-template-columns: 1fr;
+            }
+
+            .details-image {
+                width: 200px;
+                height: 280px;
+                margin: auto;
+                display: block;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .logo {
+                font-size: 22px;
+            }
+
+            .cart-btn {
+                padding: 9px 10px;
+            }
+
+            .icon-btn {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 15px;
+            }
+
+            .books {
+                grid-template-columns: 1fr;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .book-cover {
+                height: 380px;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .search-box button {
+                height: 45px;
+            }
+
+            .checkout-form {
+                grid-template-columns: 1fr;
+            }
+
+            .checkout-form .full,
+            .place-order {
+                grid-column: auto;
+            }
+
+            .cart {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .section {
+                padding: 60px 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header>
+        <nav>
+
+            <a href="#home" class="logo">
+                Book<span>Store</span>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#books">Books</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#video">How It Works</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+            <div class="nav-actions">
+
+                <button class="icon-btn"
+                        onclick="toggleDarkMode()"
+                        title="Dark Mode">
+                    🌙
+                </button>
+
+                <button class="login-btn"
+                        onclick="openAuth()">
+                    Login
+                </button>
+
+                <button class="cart-btn"
+                        onclick="openCart()">
+                    Cart
+                    <span id="cartCount">0</span>
+                </button>
+
+            </div>
+
+            <button class="icon-btn mobile-menu"
+                    onclick="toggleMobileMenu()">
+                ☰
+            </button>
+
+        </nav>
+
+        <div id="mobileNav"
+             style="display:none;padding:15px 22px;border-top:1px solid var(--border);">
+
+            <a href="#home" onclick="closeMobileMenu()">Home</a><br><br>
+            <a href="#books" onclick="closeMobileMenu()">Books</a><br><br>
+            <a href="#categories" onclick="closeMobileMenu()">Categories</a><br><br>
+            <a href="#video" onclick="closeMobileMenu()">How It Works</a><br><br>
+            <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+
+        </div>
+    </header>
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="hero" id="home">
+
+        <div class="hero-container">
+
+            <div class="hero-content">
+
+                <span class="hero-badge">
+                    Welcome to BookStore
+                </span>
+
+                <h1>
+                    Find Your Next
+                    <span>Great Read.</span>
+                </h1>
+
+                <p>
+                    Explore a carefully selected collection of novels,
+                    classics, fantasy, science fiction, self-development
+                    and more. Discover stories that stay with you.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="#books"
+                       class="primary-btn">
+                        Explore Books
+                    </a>
+
+                    <a href="#video"
+                       class="secondary-btn">
+                        Watch How It Works
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="hero-book">
+
+                <img
+                    src="https://covers.openlibrary.org/b/isbn/9780062315007-L.jpg"
+                    alt="The Alchemist">
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         BOOKS
+    ========================== -->
+
+    <section class="section" id="books">
+
+        <div class="section-heading">
+
+            <h2>Our Books</h2>
+
+            <p>
+                Search and explore our collection.
+            </p>
+
+        </div>
+
+        <div class="search-box">
+
+            <input
+                id="search"
+                type="text"
+                placeholder="Search by book title or author..."
+                oninput="searchBooks()">
+
+            <button onclick="searchBooks()">
+                Search
+            </button>
+
+        </div>
+
+
+        <div class="filters">
+
+            <button class="filter active"
+                    onclick="filterBooks('All', this)">
+                All
+            </button>
+
+            <button class="filter"
+                    onclick="filterBooks('Science Fiction', this)">
+                Science Fiction
+            </button>
+
+            <button class="filter"
+                    onclick="filterBooks('Romance', this)">
+                Romance
+            </button>
+
+            <button class="filter"
+                    onclick="filterBooks('Mystery', this)">
+                Mystery
+            </button>
+
+            <button class="filter"
+                    onclick="filterBooks('Horror', this)">
+                Horror
+            </button>
+
+            <button class="filter"
+                    onclick="filterBooks('Detective', this)">
+                Detective
+            </button>
+
+            <button class="filter"
+                    onclick="filterBooks('Self Development', this)">
+                Self Development
+            </button>
+
+            <button class="filter"
+                    onclick="filterBooks('Historical', this)">
+                Historical
+            </button>
+
+            <button class="filter"
+                    onclick="filterBooks('Fantasy', this)">
+                Fantasy
+            </button>
+
+            <button class="filter"
+                    onclick="filterBooks('Adventure', this)">
+                Adventure
+            </button>
+
+        </div>
+
+
+        <div class="books" id="bookList">
+
+            <!-- BOOK 1 -->
+
+            <article class="book-card"
+                     data-category="Self Development"
+                     data-title="Atomic Habits"
+                     data-author="James Clear"
+                     data-id="1">
+
+                <div class="book-cover">
+
+                    <img class="first-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg"
+                         alt="Atomic Habits">
+
+                    <img class="second-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9781847941831-L.jpg"
+                         alt="Atomic Habits alternate cover">
+
+                </div>
+
+                <div class="book-info">
+
+                    <h3>Atomic Habits</h3>
+
+                    <p class="author">
+                        James Clear
+                    </p>
+
+                    <p class="category">
+                        Self Development
+                    </p>
+
+                    <div class="book-bottom">
+
+                        <span class="price">
+                            $18
+                        </span>
+
+                        <div class="book-actions">
+
+                            <button class="small-btn details-btn"
+                                    onclick="showDetails(1)">
+                                Details
+                            </button>
+
+                            <button class="small-btn add-btn"
+                                    onclick="addToCart(1)">
+                                Add
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- BOOK 2 -->
+
+            <article class="book-card"
+                     data-category="Science Fiction"
+                     data-title="Dune"
+                     data-author="Frank Herbert">
+
+                <div class="book-cover">
+
+                    <img class="first-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9780441172719-L.jpg"
+                         alt="Dune">
+
+                    <img class="second-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9780593099323-L.jpg"
+                         alt="Dune alternate cover">
+
+                </div>
+
+                <div class="book-info">
+
+                    <h3>Dune</h3>
+
+                    <p class="author">
+                        Frank Herbert
+                    </p>
+
+                    <p class="category">
+                        Science Fiction
+                    </p>
+
+                    <div class="book-bottom">
+
+                        <span class="price">$21</span>
+
+                        <div class="book-actions">
+
+                            <button class="small-btn details-btn"
+                                    onclick="showDetails(2)">
+                                Details
+                            </button>
+
+                            <button class="small-btn add-btn"
+                                    onclick="addToCart(2)">
+                                Add
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- BOOK 3 -->
+
+            <article class="book-card"
+                     data-category="Fantasy"
+                     data-title="Harry Potter"
+                     data-author="J.K. Rowling">
+
+                <div class="book-cover">
+
+                    <img class="first-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9780590353427-L.jpg"
+                         alt="Harry Potter">
+
+                    <img class="second-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9781408855652-L.jpg"
+                         alt="Harry Potter alternate cover">
+
+                </div>
+
+                <div class="book-info">
+
+                    <h3>Harry Potter</h3>
+
+                    <p class="author">
+                        J.K. Rowling
+                    </p>
+
+                    <p class="category">
+                        Fantasy
+                    </p>
+
+                    <div class="book-bottom">
+
+                        <span class="price">$20</span>
+
+                        <div class="book-actions">
+
+                            <button class="small-btn details-btn"
+                                    onclick="showDetails(3)">
+                                Details
+                            </button>
+
+                            <button class="small-btn add-btn"
+                                    onclick="addToCart(3)">
+                                Add
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- BOOK 4 -->
+
+            <article class="book-card"
+                     data-category="Horror"
+                     data-title="Dracula"
+                     data-author="Bram Stoker">
+
+                <div class="book-cover">
+
+                    <img class="first-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9780141439846-L.jpg"
+                         alt="Dracula">
+
+                    <img class="second-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9780241950432-L.jpg"
+                         alt="Dracula alternate cover">
+
+                </div>
+
+                <div class="book-info">
+
+                    <h3>Dracula</h3>
+
+                    <p class="author">
+                        Bram Stoker
+                    </p>
+
+                    <p class="category">
+                        Horror
+                    </p>
+
+                    <div class="book-bottom">
+
+                        <span class="price">$14</span>
+
+                        <div class="book-actions">
+
+                            <button class="small-btn details-btn"
+                                    onclick="showDetails(4)">
+                                Details
+                            </button>
+
+                            <button class="small-btn add-btn"
+                                    onclick="addToCart(4)">
+                                Add
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- BOOK 5 -->
+
+            <article class="book-card"
+                     data-category="Romance"
+                     data-title="Pride and Prejudice"
+                     data-author="Jane Austen">
+
+                <div class="book-cover">
+
+                    <img class="first-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9780141439518-L.jpg"
+                         alt="Pride and Prejudice">
+
+                    <img class="second-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9780307594006-L.jpg"
+                         alt="Pride and Prejudice alternate cover">
+
+                </div>
+
+                <div class="book-info">
+
+                    <h3>Pride and Prejudice</h3>
+
+                    <p class="author">
+                        Jane Austen
+                    </p>
+
+                    <p class="category">
+                        Romance
+                    </p>
+
+                    <div class="book-bottom">
+
+                        <span class="price">$16</span>
+
+                        <div class="book-actions">
+
+                            <button class="small-btn details-btn"
+                                    onclick="showDetails(5)">
+                                Details
+                            </button>
+
+                            <button class="small-btn add-btn"
+                                    onclick="addToCart(5)">
+                                Add
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- BOOK 6 -->
+
+            <article class="book-card"
+                     data-category="Detective"
+                     data-title="Sherlock Holmes"
+                     data-author="Arthur Conan Doyle">
+
+                <div class="book-cover">
+
+                    <img class="first-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9780140439072-L.jpg"
+                         alt="Sherlock Holmes">
+
+                    <img class="second-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9780008182199-L.jpg"
+                         alt="Sherlock Holmes alternate cover">
+
+                </div>
+
+                <div class="book-info">
+
+                    <h3>Sherlock Holmes</h3>
+
+                    <p class="author">
+                        Arthur Conan Doyle
+                    </p>
+
+                    <p class="category">
+                        Detective
+                    </p>
+
+                    <div class="book-bottom">
+
+                        <span class="price">$17</span>
+
+                        <div class="book-actions">
+
+                            <button class="small-btn details-btn"
+                                    onclick="showDetails(6)">
+                                Details
+                            </button>
+
+                            <button class="small-btn add-btn"
+                                    onclick="addToCart(6)">
+                                Add
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- BOOK 7 -->
+
+            <article class="book-card"
+                     data-category="Adventure"
+                     data-title="The Hobbit"
+                     data-author="J.R.R. Tolkien">
+
+                <div class="book-cover">
+
+                    <img class="first-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9780547928227-L.jpg"
+                         alt="The Hobbit">
+
+                    <img class="second-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9780261102217-L.jpg"
+                         alt="The Hobbit alternate cover">
+
+                </div>
+
+                <div class="book-info">
+
+                    <h3>The Hobbit</h3>
+
+                    <p class="author">
+                        J.R.R. Tolkien
+                    </p>
+
+                    <p class="category">
+                        Adventure
+                    </p>
+
+                    <div class="book-bottom">
+
+                        <span class="price">$19</span>
+
+                        <div class="book-actions">
+
+                            <button class="small-btn details-btn"
+                                    onclick="showDetails(7)">
+                                Details
+                            </button>
+
+                            <button class="small-btn add-btn"
+                                    onclick="addToCart(7)">
+                                Add
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- BOOK 8 -->
+
+            <article class="book-card"
+                     data-category="Mystery"
+                     data-title="The Great Gatsby"
+                     data-author="F. Scott Fitzgerald">
+
+                <div class="book-cover">
+
+                    <img class="first-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9780743273565-L.jpg"
+                         alt="The Great Gatsby">
+
+                    <img class="second-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9780141182636-L.jpg"
+                         alt="The Great Gatsby alternate cover">
+
+                </div>
+
+                <div class="book-info">
+
+                    <h3>The Great Gatsby</h3>
+
+                    <p class="author">
+                        F. Scott Fitzgerald
+                    </p>
+
+                    <p class="category">
+                        Mystery
+                    </p>
+
+                    <div class="book-bottom">
+
+                        <span class="price">$13</span>
+
+                        <div class="book-actions">
+
+                            <button class="small-btn details-btn"
+                                    onclick="showDetails(8)">
+                                Details
+                            </button>
+
+                            <button class="small-btn add-btn"
+                                    onclick="addToCart(8)">
+                                Add
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- BOOK 9 -->
+
+            <article class="book-card"
+                     data-category="Adventure"
+                     data-title="The Alchemist"
+                     data-author="Paulo Coelho">
+
+                <div class="book-cover">
+
+                    <img class="first-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9780062315007-L.jpg"
+                         alt="The Alchemist">
+
+                    <img class="second-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9780007155668-L.jpg"
+                         alt="The Alchemist alternate cover">
+
+                </div>
+
+                <div class="book-info">
+
+                    <h3>The Alchemist</h3>
+
+                    <p class="author">
+                        Paulo Coelho
+                    </p>
+
+                    <p class="category">
+                        Adventure
+                    </p>
+
+                    <div class="book-bottom">
+
+                        <span class="price">$12</span>
+
+                        <div class="book-actions">
+
+                            <button class="small-btn details-btn"
+                                    onclick="showDetails(9)">
+                                Details
+                            </button>
+
+                            <button class="small-btn add-btn"
+                                    onclick="addToCart(9)">
+                                Add
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- BOOK 10 WITHOUT IMAGE -->
+
+            <article class="book-card"
+                     data-category="Historical"
+                     data-title="The Diary of a Young Girl"
+                     data-author="Anne Frank">
+
+                <div class="book-cover">
+
+                    <div class="no-image-cover">
+                        <div class="book-symbol">📖</div>
+                        <strong>BookStore</strong>
+                        <small>No Cover Available</small>
+                    </div>
+
+                </div>
+
+                <div class="book-info">
+
+                    <h3>The Diary of a Young Girl</h3>
+
+                    <p class="author">
+                        Anne Frank
+                    </p>
+
+                    <p class="category">
+                        Historical
+                    </p>
+
+                    <div class="book-bottom">
+
+                        <span class="price">$15</span>
+
+                        <div class="book-actions">
+
+                            <button class="small-btn details-btn"
+                                    onclick="showDetails(10)">
+                                Details
+                            </button>
+
+                            <button class="small-btn add-btn"
+                                    onclick="addToCart(10)">
+                                Add
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- BOOK 11 -->
+
+            <article class="book-card"
+                     data-category="Self Development"
+                     data-title="The 7 Habits"
+                     data-author="Stephen Covey">
+
+                <div class="book-cover">
+
+                    <img class="first-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9781982137274-L.jpg"
+                         alt="The 7 Habits">
+
+                    <img class="second-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9780743269513-L.jpg"
+                         alt="The 7 Habits alternate cover">
+
+                </div>
+
+                <div class="book-info">
+
+                    <h3>The 7 Habits</h3>
+
+                    <p class="author">
+                        Stephen Covey
+                    </p>
+
+                    <p class="category">
+                        Self Development
+                    </p>
+
+                    <div class="book-bottom">
+
+                        <span class="price">$18</span>
+
+                        <div class="book-actions">
+
+                            <button class="small-btn details-btn"
+                                    onclick="showDetails(11)">
+                                Details
+                            </button>
+
+                            <button class="small-btn add-btn"
+                                    onclick="addToCart(11)">
+                                Add
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- BOOK 12 -->
+
+            <article class="book-card"
+                     data-category="Science Fiction"
+                     data-title="1984"
+                     data-author="George Orwell">
+
+                <div class="book-cover">
+
+                    <img class="first-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9780451524935-L.jpg"
+                         alt="1984">
+
+                    <img class="second-cover"
+                         src="https://covers.openlibrary.org/b/isbn/9780141036144-L.jpg"
+                         alt="1984 alternate cover">
+
+                </div>
+
+                <div class="book-info">
+
+                    <h3>1984</h3>
+
+                    <p class="author">
+                        George Orwell
+                    </p>
+
+                    <p class="category">
+                        Science Fiction
+                    </p>
+
+                    <div class="book-bottom">
+
+                        <span class="price">$14</span>
+
+                        <div class="book-actions">
+
+                            <button class="small-btn details-btn"
+                                    onclick="showDetails(12)">
+                                Details
+                            </button>
+
+                            <button class="small-btn add-btn"
+                                    onclick="addToCart(12)">
+                                Add
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <div class="no-books" id="noBooks">
+                No books found matching your search.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CATEGORIES
+    ========================== -->
+
+    <section class="category-section" id="categories">
+
+        <div class="section">
+
+            <div class="section-heading">
+
+                <h2>Browse Categories</h2>
+
+                <p>
+                    Find your favorite type of book.
+                </p>
+
+            </div>
+
+            <div class="category-grid">
+
+                <div class="category-box">
+                    <div class="category-icon">🚀</div>
+                    <h3>Science Fiction</h3>
+                    <p>Future worlds and technology</p>
+                </div>
+
+                <div class="category-box">
+                    <div class="category-icon">❤️</div>
+                    <h3>Romance</h3>
+                    <p>Love and relationships</p>
+                </div>
+
+                <div class="category-box">
+                    <div class="category-icon">🔎</div>
+                    <h3>Mystery</h3>
+                    <p>Secrets and mysteries</p>
+                </div>
+
+                <div class="category-box">
+                    <div class="category-icon">👻</div>
+                    <h3>Horror</h3>
+                    <p>Dark and scary stories</p>
+                </div>
+
+                <div class="category-box">
+                    <div class="category-icon">🕵️</div>
+                    <h3>Detective</h3>
+                    <p>Cases and investigations</p>
+                </div>
+
+                <div class="category-box">
+                    <div class="category-icon">🌱</div>
+                    <h3>Self Development</h3>
+                    <p>Improve your daily life</p>
+                </div>
+
+                <div class="category-box">
+                    <div class="category-icon">🏛️</div>
+                    <h3>Historical</h3>
+                    <p>Stories from history</p>
+                </div>
+
+                <div class="category-box">
+                    <div class="category-icon">🧙</div>
+                    <h3>Fantasy</h3>
+                    <p>Magical worlds</p>
+                </div>
+
+                <div class="category-box">
+                    <div class="category-icon">🗺️</div>
+                    <h3>Adventure</h3>
+                    <p>Journeys and exploration</p>
+                </div>
+
+                <div class="category-box">
+                    <div class="category-icon">💼</div>
+                    <h3>Business</h3>
+                    <p>Money, work and success</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         VIDEO
+    ========================== -->
+
+    <section class="video-section" id="video">
+
+        <div class="section">
+
+            <div class="section-heading">
+
+                <h2>How BookStore Works</h2>
+
+                <p>
+                    Watch the video to learn how to browse,
+                    view and add books to your cart.
+                </p>
+
+            </div>
+
+            <div class="video-container">
+
+                <div class="video-box">
+
+                    <!--
+                        Replace "bookstore-demo.mp4"
+                        with your own video file.
+                    -->
+
+                    <video controls poster="">
+                        <source
+                            src="bookstore-demo.mp4"
+                            type="video/mp4">
+
+                        Your browser does not support video playback.
+                    </video>
+
+                </div>
+
+                <p class="video-note">
+                    Add your tutorial video as
+                    <strong>bookstore-demo.mp4</strong>
+                    next to this HTML file.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CONTACT
+    ========================== -->
+
+    <section class="contact" id="contact">
+
+        <div class="contact-container">
+
+            <h2>Contact Us</h2>
+
+            <p class="contact-description">
+                Have a question or suggestion?
+                Send us a message.
+            </p>
+
+            <form id="contactForm">
+
+                <div class="form-group">
+
+                    <label>Your Name</label>
+
+                    <input
+                        type="text"
+                        placeholder="Enter your name"
+                        required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Email Address</label>
+
+                    <input
+                        type="email"
+                        placeholder="example@email.com"
+                        required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Message</label>
+
+                    <textarea
+                        placeholder="Write your message..."
+                        required></textarea>
+
+                </div>
+
+                <button class="submit-btn">
+                    Send Message
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div class="footer-logo">
+            BookStore
+        </div>
+
+        <p>
+            © 2026 BookStore. All rights reserved.
+        </p>
+
+    </footer>
+
+
+    <!-- =========================
+         CART
+    ========================== -->
+
+    <div class="cart-overlay"
+         id="cartOverlay"
+         onclick="closeCart()">
+    </div>
+
+    <aside class="cart" id="cart">
+
+        <div class="cart-header">
+
+            <h2>Your Cart</h2>
+
+            <button class="close-cart"
+                    onclick="closeCart()">
+                ×
+            </button>
+
+        </div>
+
+        <div class="cart-items"
+             id="cartItems">
+        </div>
+
+        <div class="cart-footer">
+
+            <div class="cart-total">
+
+                <span>Total</span>
+
+                <span id="cartTotal">
+                    $0
+                </span>
+
+            </div>
+
+            <button class="checkout-btn"
+                    onclick="openCheckout()">
+                Proceed to Checkout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================
+         AUTH MODAL
+    ========================== -->
+
+    <div class="modal-overlay"
+         id="authModal">
+
+        <div class="modal">
+
+            <button class="close-modal"
+                    onclick="closeAuth()">
+                ×
+            </button>
+
+            <h2 id="authTitle">
+                Welcome Back
+            </h2>
+
+            <div class="tabs">
+
+                <button class="tab active"
+                        id="loginTab"
+                        onclick="switchAuth('login')">
+                    Login
+                </button>
+
+                <button class="tab"
+                        id="registerTab"
+                        onclick="switchAuth('register')">
+                    Register
+                </button>
+
+            </div>
+
+
+            <form class="auth-form"
+                  id="loginForm">
+
+                <input
+                    type="email"
+                    placeholder="Email address"
+                    required>
+
+                <input
+                    type="password"
+                    placeholder="Password"
+                    required>
+
+                <button type="submit">
+                    Login
+                </button>
+
+            </form>
+
+
+            <form class="auth-form"
+                  id="registerForm"
+                  style="display:none;">
+
+                <input
+                    type="text"
+                    placeholder="Full name"
+                    required>
+
+                <input
+                    type="email"
+                    placeholder="Email address"
+                    required>
+
+                <input
+                    type="password"
+                    placeholder="Create password"
+                    required>
+
+                <button type="submit">
+                    Create Account
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         DETAILS MODAL
+    ========================== -->
+
+    <div class="modal-overlay"
+         id="detailsModal">
+
+        <div class="modal large">
+
+            <button class="close-modal"
+                    onclick="closeDetails()">
+                ×
+            </button>
+
+            <div class="details-content"
+                 id="detailsContent">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         CHECKOUT MODAL
+    ========================== -->
+
+    <div class="modal-overlay"
+         id="checkoutModal">
+
+        <div class="modal">
+
+            <button class="close-modal"
+                    onclick="closeCheckout()">
+                ×
+            </button>
+
+            <h2>Checkout</h2>
+
+            <form class="checkout-form"
+                  id="checkoutForm">
+
+                <div>
+
+                    <label>First Name</label>
+
+                    <input
+                        type="text"
+                        required
+                        placeholder="John">
+
+                </div>
+
+                <div>
+
+                    <label>Last Name</label>
+
+                    <input
+                        type="text"
+                        required
+                        placeholder="Smith">
+
+                </div>
+
+                <div class="full">
+
+                    <label>Email</label>
+
+                    <input
+                        type="email"
+                        required
+                        placeholder="john@example.com">
+
+                </div>
+
+                <div class="full">
+
+                    <label>Address</label>
+
+                    <input
+                        type="text"
+                        required
+                        placeholder="Your address">
+
+                </div>
+
+                <div>
+
+                    <label>City</label>
+
+                    <input
+                        type="text"
+                        required
+                        placeholder="Cairo">
+
+                </div>
+
+                <div>
+
+                    <label>Country</label>
+
+                    <select required>
+
+                        <option value="">
+                            Select Country
+                        </option>
+
+                        <option>
+                            Egypt
+                        </option>
+
+                        <option>
+                            United States
+                        </option>
+
+                        <option>
+                            United Kingdom
+                        </option>
+
+                        <option>
+                            Canada
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="full">
+
+                    <label>Payment Method</label>
+
+                    <select required>
+
+                        <option value="">
+                            Select Payment Method
+                        </option>
+
+                        <option>
+                            Credit Card
+                        </option>
+
+                        <option>
+                            Cash on Delivery
+                        </option>
+
+                        <option>
+                            PayPal
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <button class="place-order"
+                        type="submit">
+                    Place Order
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- TOAST -->
+
+    <div class="toast"
+         id="toast">
+        Added to cart.
+    </div>
+
+
+    <script>
+
+        /* =========================
+           BOOK DATA
+        ========================== */
+
+        const books = {
+
+            1: {
+                title: "Atomic Habits",
+                author: "James Clear",
+                category: "Self Development",
+                price: 18,
+                image: "https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg",
+                description:
+                    "A practical guide to building good habits, breaking bad ones and making small changes that can create remarkable results."
+            },
+
+            2: {
+                title: "Dune",
+                author: "Frank Herbert",
+                category: "Science Fiction",
+                price: 21,
+                image: "https://covers.openlibrary.org/b/isbn/9780441172719-L.jpg",
+                description:
+                    "A legendary science fiction story set on the desert planet Arrakis, filled with politics, adventure and an epic struggle for power."
+            },
+
+            3: {
+                title: "Harry Potter",
+                author: "J.K. Rowling",
+                category: "Fantasy",
+                price: 20,
+                image: "https://covers.openlibrary.org/b/isbn/9780590353427-L.jpg",
+                description:
+                    "Follow Harry Potter as he discovers the magical world and begins his unforgettable journey at Hogwarts."
+            },
+
+            4: {
+                title: "Dracula",
+                author: "Bram Stoker",
+                category: "Horror",
+                price: 14,
+                image: "https://covers.openlibrary.org/b/isbn/9780141439846-L.jpg",
+                description:
+                    "A classic gothic horror novel centered around Count Dracula and a terrifying supernatural mystery."
+            },
+
+            5: {
+                title: "Pride and Prejudice",
+                author: "Jane Austen",
+                category: "Romance",
+                price: 16,
+                image: "https://covers.openlibrary.org/b/isbn/9780141439518-L.jpg",
+                description:
+                    "A classic novel exploring love, family, society and first impressions through the relationship of Elizabeth Bennet and Mr. Darcy."
+            },
+
+            6: {
+                title: "Sherlock Holmes",
+                author: "Arthur Conan Doyle",
+                category: "Detective",
+                price: 17,
+                image: "https://covers.openlibrary.org/b/isbn/9780140439072-L.jpg",
+                description:
+                    "Join Sherlock Holmes and Dr. Watson as they solve mysterious cases using observation and deduction."
+            },
+
+            7: {
+                title: "The Hobbit",
+                author: "J.R.R. Tolkien",
+                category: "Adventure",
+                price: 19,
+                image: "https://covers.openlibrary.org/b/isbn/9780547928227-L.jpg",
+                description:
+                    "Bilbo Baggins leaves his quiet home and joins an unexpected adventure involving dwarves, dragons and a mysterious ring."
+            },
+
+            8: {
+                title: "The Great Gatsby",
+                author: "F. Scott Fitzgerald",
+                category: "Mystery",
+                price: 13,
+                image: "https://covers.openlibrary.org/b/isbn/9780743273565-L.jpg",
+                description:
+                    "A story of ambition, wealth, love and secrets set during the Jazz Age."
+            },
+
+            9: {
+                title: "The Alchemist",
+                author: "Paulo Coelho",
+                category: "Adventure",
+                price: 12,
+                image: "https://covers.openlibrary.org/b/isbn/9780062315007-L.jpg",
+                description:
+                    "A young shepherd follows his dreams on a journey of discovery, adventure and personal transformation."
+            },
+
+            10: {
+                title: "The Diary of a Young Girl",
+                author: "Anne Frank",
+                category: "Historical",
+                price: 15,
+                image: null,
+                description:
+                    "A historical diary documenting Anne Frank's thoughts, experiences and hopes while living in hiding during World War II."
+            },
+
+            11: {
+                title: "The 7 Habits",
+                author: "Stephen Covey",
+                category: "Self Development",
+                price: 18,
+                image: "https://covers.openlibrary.org/b/isbn/9781982137274-L.jpg",
+                description:
+                    "A well-known personal effectiveness guide focused on principles and habits for achieving meaningful goals."
+            },
+
+            12: {
+                title: "1984",
+                author: "George Orwell",
+                category: "Science Fiction",
+                price: 14,
+                image: "https://covers.openlibrary.org/b/isbn/9780451524935-L.jpg",
+                description:
+                    "A dystopian novel about surveillance, control, truth and individual freedom in a highly controlled society."
+            }
+
+        };
+
+
+        /* =========================
+           CART
+        ========================== */
+
+        let cart = [];
+
+
+        function addToCart(id) {
+
+            const existing =
+                cart.find(item => item.id === id);
+
+            if (existing) {
+
+                existing.quantity++;
+
+            } else {
+
+                cart.push({
+                    id: id,
+                    quantity: 1
+                });
+
+            }
+
+            updateCart();
+
+            showToast(
+                books[id].title + " added to cart."
+            );
+
+            openCart();
+
+        }
+
+
+        function updateCart() {
+
+            const cartItems =
+                document.getElementById("cartItems");
+
+            const cartCount =
+                document.getElementById("cartCount");
+
+            const cartTotal =
+                document.getElementById("cartTotal");
+
+
+            let totalItems = 0;
+            let totalPrice = 0;
+
+
+            cart.forEach(item => {
+
+                totalItems += item.quantity;
+
+                totalPrice +=
+                    books[item.id].price *
+                    item.quantity;
+
+            });
+
+
+            cartCount.textContent =
+                totalItems;
+
+
+            cartTotal.textContent =
+                "$" + totalPrice;
+
+
+            if (cart.length === 0) {
+
+                cartItems.innerHTML = `
+                    <div style="
+                        text-align:center;
+                        padding:60px 15px;
+                        color:var(--muted);
+                    ">
+                        Your cart is empty.
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            cartItems.innerHTML =
+                cart.map(item => {
+
+                    const book =
+                        books[item.id];
+
+                    const image =
+                        book.image ||
+                        "https://via.placeholder.com/100x140?text=Book";
+
+
+                    return `
+                        <div class="cart-item">
+
+                            <img
+                                src="${image}"
+                                alt="${book.title}">
+
+                            <div class="cart-info">
+
+                                <h4>
+                                    ${book.title}
+                                </h4>
+
+                                <div class="cart-price">
+                                    $${book.price}
+                                </div>
+
+                                <div class="quantity">
+
+                                    <button
+                                        onclick="changeQuantity(${item.id}, -1)">
+                                        -
+                                    </button>
+
+                                    <span>
+                                        ${item.quantity}
+                                    </span>
+
+                                    <button
+                                        onclick="changeQuantity(${item.id}, 1)">
+                                        +
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                            <button
+                                class="remove-item"
+                                onclick="removeFromCart(${item.id})">
+                                Remove
+                            </button>
+
+                        </div>
+                    `;
+
+                }).join("");
+
+        }
+
+
+        function changeQuantity(id, amount) {
+
+            const item =
+                cart.find(item => item.id === id);
+
+            if (!item) return;
+
+            item.quantity += amount;
+
+
+            if (item.quantity <= 0) {
+
+                cart =
+                    cart.filter(
+                        item => item.id !== id
+                    );
+
+            }
+
+            updateCart();
+
+        }
+
+
+        function removeFromCart(id) {
+
+            cart =
+                cart.filter(
+                    item => item.id !== id
+                );
+
+            updateCart();
+
+            showToast("Item removed from cart.");
+
+        }
+
+
+        function openCart() {
+
+            document
+                .getElementById("cart")
+                .classList.add("show");
+
+            document
+                .getElementById("cartOverlay")
+                .classList.add("show");
+
+        }
+
+
+        function closeCart() {
+
+            document
+                .getElementById("cart")
+                .classList.remove("show");
+
+            document
+                .getElementById("cartOverlay")
+                .classList.remove("show");
+
+        }
+
+
+        /* =========================
+           CHECKOUT
+        ========================== */
+
+        function openCheckout() {
+
+            if (cart.length === 0) {
+
+                showToast(
+                    "Your cart is empty."
+                );
+
+                return;
+            }
+
+            closeCart();
+
+            document
+                .getElementById("checkoutModal")
+                .classList.add("show");
+
+        }
+
+
+        function closeCheckout() {
+
+            document
+                .getElementById("checkoutModal")
+                .classList.remove("show");
+
+        }
+
+
+        document
+            .getElementById("checkoutForm")
+            .addEventListener(
+                "submit",
+                function(event) {
+
+                    event.preventDefault();
+
+                    closeCheckout();
+
+                    cart = [];
+
+                    updateCart();
+
+                    showToast(
+                        "Order placed successfully!"
+                    );
+
+                    this.reset();
+
+                }
+            );
+
+
+        /* =========================
+           SEARCH
+        ========================== */
+
+        let currentCategory = "All";
+
+
+        function searchBooks() {
+
+            const value =
+                document
+                    .getElementById("search")
+                    .value
+                    .toLowerCase()
+                    .trim();
+
+
+            const cards =
+                document.querySelectorAll(
+                    ".book-card"
+                );
+
+
+            let found = 0;
+
+
+            cards.forEach(card => {
+
+                const title =
+                    card.dataset.title
+                        .toLowerCase();
+
+                const author =
+                    card.dataset.author
+                        .toLowerCase();
+
+                const category =
+                    card.dataset.category;
+
+
+                const searchMatch =
+                    title.includes(value) ||
+                    author.includes(value);
+
+
+                const categoryMatch =
+                    currentCategory === "All" ||
+                    category === currentCategory;
+
+
+                if (
+                    searchMatch &&
+                    categoryMatch
+                ) {
+
+                    card.style.display = "";
+
+                    found++;
+
+                } else {
+
+                    card.style.display = "none";
+
+                }
+
+            });
+
+
+            document
+                .getElementById("noBooks")
+                .style.display =
+                found === 0
+                    ? "block"
+                    : "none";
+
+        }
+
+
+        function filterBooks(category, button) {
+
+            currentCategory =
+                category;
+
+
+            document
+                .querySelectorAll(".filter")
+                .forEach(btn => {
+
+                    btn.classList.remove(
+                        "active"
+                    );
+
+                });
+
+
+            button.classList.add(
+                "active"
+            );
+
+
+            searchBooks();
+
+        }
+
+
+        /* =========================
+           BOOK DETAILS
+        ========================== */
+
+        function showDetails(id) {
+
+            const book =
+                books[id];
+
+            const details =
+                document.getElementById(
+                    "detailsContent"
+                );
+
+
+            let imageHTML;
+
+
+            if (book.image) {
+
+                imageHTML = `
+                    <img
+                        class="details-image"
+                        src="${book.image}"
+                        alt="${book.title}">
+                `;
+
+            } else {
+
+                imageHTML = `
+                    <div class="details-image no-image-cover">
+                        <div class="book-symbol">
+                            📖
+                        </div>
+                        <strong>
+                            BookStore
+                        </strong>
+                    </div>
+                `;
+
+            }
+
+
+            details.innerHTML = `
+
+                ${imageHTML}
+
+                <div>
+
+                    <h3>
+                        ${book.title}
+                    </h3>
+
+                    <p class="details-author">
+                        Written by ${book.author}
+                    </p>
+
+                    <p class="details-category">
+                        ${book.category}
+                    </p>
+
+                    <p class="details-description">
+                        ${book.description}
+                    </p>
+
+                    <div
+                        style="
+                            display:flex;
+                            align-items:center;
+                            justify-content:space-between;
+                            gap:15px;
+                        "
+                    >
+
+                        <strong
+                            style="
+                                font-size:24px;
+                                color:var(--primary);
+                            "
+                        >
+                            $${book.price}
+                        </strong>
+
+                        <button
+                            class="primary-btn"
+                            onclick="addToCart(${id}); closeDetails();"
+                        >
+                            Add to Cart
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            document
+                .getElementById("detailsModal")
+                .classList.add("show");
+
+        }
+
+
+        function closeDetails() {
+
+            document
+                .getElementById("detailsModal")
+                .classList.remove("show");
+
+        }
+
+
+        /* =========================
+           LOGIN / REGISTER
+        ========================== */
+
+        function openAuth() {
+
+            document
+                .getElementById("authModal")
+                .classList.add("show");
+
+        }
+
+
+        function closeAuth() {
+
+            document
+                .getElementById("authModal")
+                .classList.remove("show");
+
+        }
+
+
+        function switchAuth(type) {
+
+            const loginForm =
+                document.getElementById(
+                    "loginForm"
+                );
+
+            const registerForm =
+                document.getElementById(
+                    "registerForm"
+                );
+
+            const loginTab =
+                document.getElementById(
+                    "loginTab"
+                );
+
+            const registerTab =
+                document.getElementById(
+                    "registerTab"
+                );
+
+            const title =
+                document.getElementById(
+                    "authTitle"
+                );
+
+
+            if (type === "login") {
+
+                loginForm.style.display =
+                    "block";
+
+                registerForm.style.display =
+                    "none";
+
+                loginTab.classList.add(
+                    "active"
+                );
+
+                registerTab.classList.remove(
+                    "active"
+                );
+
+                title.textContent =
+                    "Welcome Back";
+
+            } else {
+
+                loginForm.style.display =
+                    "none";
+
+                registerForm.style.display =
+                    "block";
+
+                loginTab.classList.remove(
+                    "active"
+                );
+
+                registerTab.classList.add(
+                    "active"
+                );
+
+                title.textContent =
+                    "Create Account";
+
+            }
+
+        }
+
+
+        document
+            .getElementById("loginForm")
+            .addEventListener(
+                "submit",
+                function(event) {
+
+                    event.preventDefault();
+
+                    closeAuth();
+
+                    showToast(
+                        "Login successful!"
+                    );
+
+                    this.reset();
+
+                }
+            );
+
+
+        document
+            .getElementById("registerForm")
+            .addEventListener(
+                "submit",
+                function(event) {
+
+                    event.preventDefault();
+
+                    closeAuth();
+
+                    showToast(
+                        "Account created successfully!"
+                    );
+
+                    this.reset();
+
+                }
+            );
+
+
+        /* =========================
+           DARK MODE
+        ========================== */
+
+        function toggleDarkMode() {
+
+            document
+                .body
+                .classList
+                .toggle("dark");
+
+
+            const isDark =
+                document.body
+                    .classList
+                    .contains("dark");
+
+
+            localStorage.setItem(
+                "darkMode",
+                isDark
+            );
+
+        }
+
+
+        if (
+            localStorage.getItem(
+                "darkMode"
+            ) === "true"
+        ) {
+
+            document.body.classList.add(
+                "dark"
+            );
+
+        }
+
+
+        /* =========================
+           CONTACT FORM
+        ========================== */
+
+        document
+            .getElementById("contactForm")
+            .addEventListener(
+                "submit",
+                function(event) {
+
+                    event.preventDefault();
+
+                    showToast(
+                        "Message sent successfully!"
+                    );
+
+                    this.reset();
+
+                }
+            );
+
+
+        /* =========================
+           TOAST
+        ========================== */
+
+        let toastTimer;
+
+
+        function showToast(message) {
+
+            const toast =
+                document.getElementById(
+                    "toast"
+                );
+
+            toast.textContent =
+                message;
+
+            toast.classList.add(
+                "show"
+            );
+
+
+            clearTimeout(
+                toastTimer
+            );
+
+
+            toastTimer =
+                setTimeout(
+                    () => {
+
+                        toast.classList.remove(
+                            "show"
+                        );
+
+                    },
+                    2500
+                );
+
+        }
+
+
+        /* =========================
+           MOBILE MENU
+        ========================== */
+
+        function toggleMobileMenu() {
+
+            const menu =
+                document.getElementById(
+                    "mobileNav"
+                );
+
+            menu.style.display =
+                menu.style.display === "none"
+                    ? "block"
+                    : "none";
+
+        }
+
+
+        function closeMobileMenu() {
+
+            document
+                .getElementById(
+                    "mobileNav"
+                )
+                .style.display = "none";
+
+        }
+
+
+        /* =========================
+           CLOSE MODALS ON BACKDROP
+        ========================== */
+
+        document
+            .querySelectorAll(".modal-overlay")
+            .forEach(overlay => {
+
+                overlay.addEventListener(
+                    "click",
+                    function(event) {
+
+                        if (
+                            event.target ===
+                            this
+                        ) {
+
+                            this.classList.remove(
+                                "show"
+                            );
+
+                        }
+
+                    }
+                );
+
+            });
+
+
+        /* =========================
+           ESC KEY
+        ========================== */
+
+        document.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    closeCart();
+                    closeAuth();
+                    closeDetails();
+                    closeCheckout();
+
+                }
+
+            }
+        );
+
+
+        /* =========================
+           INITIALIZE
+        ========================== */
+
+        updateCart();
+
+    </script>
+
+</body>
+</html>
